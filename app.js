@@ -9,10 +9,11 @@ app.get('/', (req, res) => {
   request(url, (error, response, body) => {
     // parse the JSON response
     const data = JSON.parse(body);
-    // extract the URL, date and description of the picture from the response
+    // extract the URL, title, date and description of the picture from the response
     const imgUrl = data.url;
     const description = data.explanation;
     const date = data.date;
+    const title = data.title;
     // create an HTML page with the img and text
     const html = `
     <style>
@@ -27,7 +28,8 @@ app.get('/', (req, res) => {
     }
   </style>
   <h1>NASA PICTURE OF THE DAY</h1>
-  <h2>${date}</h2>
+  <h2>${title}</h2>
+  <h3>${date}</h3>
   <img src="${imgUrl}" />
   <h2>DESCRIPTION</h2>
   <p>${description}</p>
