@@ -2,7 +2,7 @@ const express = require('express');
 const request = require('request');
 const app = express();
 
-app.get('/nasaPOD', (req, res) => {
+app.get('/', (req, res) => {
   // NASA POD API endpoint
   const url = 'https://api.nasa.gov/planetary/apod?api_key=pj8RlyhXoZqX0KIcBXydsH0laDHCABm0IaexhvzL';
 
