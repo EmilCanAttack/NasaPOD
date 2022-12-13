@@ -19,12 +19,15 @@ app.get('/', (req, res) => {
     <style>
     body {
       text-align: center;
+      background-color: black;
+      color: white;
     }
     img {
-        width: 700px;
+        width: 850px;
     }
     p {
       text-align: center;
+      color: white;
     }
   </style>
   <h1>NASA PICTURE OF THE DAY</h1>
