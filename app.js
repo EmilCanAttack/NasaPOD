@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 // ZIYA ATAN HJEMMESIDE 
 app.get('/ziya', (req, res) => {
   // HTML HJEMMESIDE DEDIKERET TIL MIN FAR
-  const imgUrl = "https://i.ibb.co/Ry1bLDh/ziyanmark.jpg"
+  const imgUrl = "https://i.ibb.co/HN0Zt4x/ziyanmark.jpg"
   const html = `
   <style>
     body {
