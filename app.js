@@ -27,6 +27,24 @@ function checkAuth(req, res, next) {
 
 app.get('/', (req, res) => {
   res.send(`
+  <style>
+    body {
+      text-align: center;
+      background-color: black;
+      color: white;
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+    }
+    img {
+        width: 600px;
+    }
+    p {
+      text-align: center;
+      color: white;
+    }
+  </style>
     <h1>Sign Up</h1>
     <form method="POST" action="/signup">
       <label>Email:</label>
@@ -36,6 +54,11 @@ app.get('/', (req, res) => {
       <input type="password" name="password" required />
       <br />
       <button>Sign Up</button>
+    </form>
+    </form>
+      <form method="GET" action="/login">
+    <h3> Already have an account? login here </h3>
+      <button>Log in</button>
     </form>
   `);
 });
