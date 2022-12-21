@@ -1,8 +1,119 @@
 const express = require('express');
 const request = require('request');
 const app = express();
+const fs = require('fs');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+// Middleware-funktion til at kontrollere, om brugeren er godkendt
+function checkAuth(req, res, next) {
+  if (req.session.authenticated) {
+    // Brugeren er godkendt, tillad adgang til ruten
+    next();
+  } else {
+    // Brugeren er ikke godkendt, omdiriger til login-siden
+    res.redirect('/login');
+  }
+}
+
 
 app.get('/', (req, res) => {
+  res.send(`
+    <h1>Sign Up</h1>
+    <form method="POST" action="/signup">
+      <label>Email:</label>
+      <input type="email" name="email" required />
+      <br />
+      <label>Password:</label>
+      <input type="password" name="password" required />
+      <br />
+      <button>Sign Up</button>
+    </form>
+  `);
+});
+
+// Initialize the session object when the user logs in
+app.route('/signup')
+  .get((req, res) => {
+    res.send(`
+      <h1>Sign Up</h1>
+      <form method="POST" action="/signup">
+        <label>Email:</label>
+        <input type="email" name="email" required />
+        <br />
+        <label>Password:</label>
+        <input type="password" name="password" required />
+        <br />
+        <button>Sign Up</button>
+      </form>
+      <form method="GET" action="/login">
+    <h3> Already have an account? login here </h3>
+      <button>Sign Up</button>
+    </form>
+    `);
+  })
+  .post((req, res) => {
+    const { email, password } = req.body;
+    const saltRounds = 10; // Number of rounds to generate the salt
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if (err) {
+        // Handle error
+        return;
+      }
+      const data = JSON.stringify({ email, password: hash });
+      fs.writeFileSync('users.json', data);
+      res.redirect('/login');
+    });
+  });
+
+
+app.get('/login', (req, res) => {
+  res.send(`
+    <h1>Login</h1>
+    <form method="POST" action="/login">
+      <label>Email:</label>
+      <input type="email" name="email" required />
+      <br />
+      <label>Password:</label>
+      <input type="password" name="password" required />
+      <br />
+      <button>Login</button>
+    </form>
+    <form method="GET" action="/signup">
+    <h3> Dont have an account? sign up here </h3>
+      <button>Sign Up</button>
+    </form>
+  `);
+});
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const data = fs.readFileSync('users.json');
+  const user = JSON.parse(data);
+  bcrypt.compare(password, user.password, (err, result) => {
+    if (err) {
+      // Handle error
+      return;
+    }
+    if (result) {
+      // Set the authenticated property in the session
+      req.session.authenticated = true;
+      res.redirect('/nasa');
+    } else {
+      res.send('Incorrect email or password');
+    }
+  });
+});
+
+app.get('/nasa', checkAuth, (req, res) => {
   // NASA POD API endpoint
   const url = 'https://api.nasa.gov/planetary/apod?api_key=pj8RlyhXoZqX0KIcBXydsH0laDHCABm0IaexhvzL';
 
