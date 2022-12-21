@@ -74,7 +74,7 @@ app.route('/signup')
       </form>
       <form method="GET" action="/login">
     <h3> Already have an account? login here </h3>
-      <button>Sign Up</button>
+      <button>Log in</button>
     </form>
     `);
   })
