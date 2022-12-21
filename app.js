@@ -49,6 +49,10 @@ app.route('/signup')
       text-align: center;
       background-color: black;
       color: white;
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
     }
     img {
         width: 600px;
@@ -92,19 +96,23 @@ app.route('/signup')
 app.get('/login', (req, res) => {
   res.send(`
   <style>
-  body {
-    text-align: center;
-    background-color: black;
-    color: white;
-  }
-  img {
-      width: 600px;
-  }
-  p {
-    text-align: center;
-    color: white;
-  }
-</style>
+    body {
+      text-align: center;
+      background-color: black;
+      color: white;
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+    }
+    img {
+        width: 600px;
+    }
+    p {
+      text-align: center;
+      color: white;
+    }
+  </style>
     <h1>Login</h1>
     <form method="POST" action="/login">
       <label>Email:</label>
