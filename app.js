@@ -44,6 +44,20 @@ app.get('/', (req, res) => {
 app.route('/signup')
   .get((req, res) => {
     res.send(`
+    <style>
+    body {
+      text-align: center;
+      background-color: black;
+      color: white;
+    }
+    img {
+        width: 600px;
+    }
+    p {
+      text-align: center;
+      color: white;
+    }
+  </style>
       <h1>Sign Up</h1>
       <form method="POST" action="/signup">
         <label>Email:</label>
@@ -77,6 +91,20 @@ app.route('/signup')
 
 app.get('/login', (req, res) => {
   res.send(`
+  <style>
+  body {
+    text-align: center;
+    background-color: black;
+    color: white;
+  }
+  img {
+      width: 600px;
+  }
+  p {
+    text-align: center;
+    color: white;
+  }
+</style>
     <h1>Login</h1>
     <form method="POST" action="/login">
       <label>Email:</label>
